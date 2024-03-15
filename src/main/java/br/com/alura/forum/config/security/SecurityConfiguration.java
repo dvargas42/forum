@@ -46,6 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/topicos").permitAll()
                 .antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
+                .antMatchers(HttpMethod.GET, "/actuator/**").permitAll() //TODO tornar privado quando for para producao
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -54,8 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override // Configuracoes de recursos estaticos
     public void configure(WebSecurity web) throws Exception {
-        // TODO Auto-generated method stub
-        super.configure(web);
+        web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
     }
 
     public static void main(String[] args) {
